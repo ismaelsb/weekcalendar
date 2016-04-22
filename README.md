@@ -1,19 +1,23 @@
 # weekcalendar
 
 Calendario semanal.
+
 El año tropical es más estable alrededor de la fecha presente (cerca del centro de nuestro ciclo en la precesión de equinoccios que comienza con el Holoceno) si se mide entre Solsticicios del Norte. Por esto hacemos una modificación al anterior calendario semanal propuesto:
 El año se divide en 4 estaciones de 13 semanas cada una, empezando la tercera estación (S3,verano en el Norte) en el inicio UTC de lunes más próximo al Solsticio del Norte. El año, por tanto, comienza 26 semanas antes, cerca del solsticio del Sur aunque no atado a éste.
 Cuando el solsticio del Norte salta de un año al otro por el mediodía del jueves, el año tiene una semana más. Se añade la semana extra* S3W00 al principio de S3.
 Los ciclos son el 'Año Grande de la precesión', el año, la estación, la semana y el día. El meridiano de referencia es provisionalmente el de Greenwich.
+
 El patrón regular que marca como 'bisisestos' los años que cumplen
 (a * y + δ) mod a < b, con a/b =127/716 y δ = 160
 coincide con el ciclo de solsticios en el periodo 1382-2749.
 (127/716 es una buena aproximación en la serie de fracciones continuas para la longitud en semanas del año trópico entre solsticios 365.241626 / 7)
 Para el cálculo de δ se usa la numeración juliana-gregoriana de los años. Se puede utilizar otra epoch cercana al inicio del Holoceno sumándole 10000 años o darle una definición más precisa como por ejemplo el momento en el que el solsticio de invierno (Sur) y el afelio coincidieron.
+
 Formato de fechas:
 12016-S2W01-2
 12016, Primavera 1, Martes
 Martes, Semana 1 de Primavera de 12016
+
 La lista completa de años especiales en el periodo 1382-2749 es:
 1386
 1392
