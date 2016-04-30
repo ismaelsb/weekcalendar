@@ -122,9 +122,9 @@ y = np.arange(0,33,dtype=int)
 
 #date converter
 
-imputdate = (2016,3,17)
+inputdate = (2016,3,17)
 
-def datetoWeekcal(imputdate):
+def datetoWeekcal(inputdate):
 
     a = 127
     b = 716
@@ -133,14 +133,14 @@ def datetoWeekcal(imputdate):
     
     pattern = (a*np.arange(1382,2750)+delta) % b < a
 
-    imputfromEpoch = ( ephem.Date(imputdate)-ephem.Date((1381,12,16)) ) % 261513
+    inputfromEpoch = ( ephem.Date(inputdate)-ephem.Date((1381,12,16)) ) % 261513
     #16 dec 1381, mon post-near to solstice   
     #ephem.next_summer_solstice(str(1382))%7 = 5.2324 ; 13 jun-> mon 16 jun - 182d 
     
-    cycles = ( ephem.Date(imputdate)-ephem.Date((1381,12,16)) ) // 261513
+    cycles = ( ephem.Date(inputdate)-ephem.Date((1381,12,16)) ) // 261513
 
-    weeksfromEpoch = imputfromEpoch // 7
-    weekday = imputfromEpoch % 7 + 1
+    weeksfromEpoch = inputfromEpoch // 7
+    weekday = inputfromEpoch % 7 + 1
 
     accumleaps = np.append(0,np.cumsum(pattern+52))
 
