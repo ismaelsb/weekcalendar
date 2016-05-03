@@ -1,0 +1,91 @@
+---
+title: ""
+author: ""
+date: ""
+output: html_document
+runtime: shiny
+---
+
+
+
+## Week Calendar Converter
+
+Gregorian to Season-Week Calendar
+
+```{r, echo=FALSE}
+
+datetoWeekcal <- function(inputdate=NULL, inputdatestring=NULL) {
+  
+  a = 127
+  b = 716
+  
+  delta = 160
+  pattern <- (a*1382:2749+delta) %% b < a
+  
+  if (is.null(inputdatestring)) {
+  inputdatestring <- capture.output(cat(inputdate, sep='-'))
+  }
+  
+  inputfromEpoch <- (unclass(as.POSIXct(inputdatestring))-unclass(as.POSIXct("1381-12-24")))%/%86400 %% 261513
+  #16 dec 1381, mon post-near to solstice  -> 24 dec 1381 gregorian proleptic
+  #ephem.next_summer_solstice(str(1382))%7 = 5.2324 ; 13 jun-> mon 16 jun - 182d 
+  
+  cycles = ( unclass(as.POSIXct(inputdatestring))-unclass(as.POSIXct("1381-12-16")) )%/%86400 %/% 261513
+  
+  weeksfromEpoch = inputfromEpoch %/% 7
+  weekday = inputfromEpoch %% 7 + 1
+  
+  accumleaps = c(0,cumsum(pattern+52))
+  
+  yearWcalincycle = which.max(accumleaps>weeksfromEpoch)-1
+  
+  weeknWcal = weeksfromEpoch - accumleaps[yearWcalincycle]
+  
+  
+  if (pattern[yearWcalincycle]==F){
+    seasonWcal=which.max(c(13,26,39,52)>weeknWcal)
+    weekWcal = weeknWcal-c(0,13,26,39)[seasonWcal]
+    weekWcal = weekWcal + 1
+  } else {
+    seasonWcal=which.max(c(13,26,40,53)>weeknWcal) 
+    weekWcal = weeknWcal-c(0,13,26,40)[seasonWcal]
+    if (seasonWcal!=3){
+    weekWcal = weekWcal + 1 #Season 3 starts with week 0, the rest in 1
+    }
+  }
+  
+  date = c(as.integer(yearWcalincycle + 1381 + cycles * 716),
+           seasonWcal,
+           as.integer(weekWcal),
+           as.integer(weekday))
+  
+  
+  
+  return(sprintf("%d-S%dW%02d-%d", date[1],date[2],date[3],date[4]))
+  
+}
+
+
+
+```
+
+```{r, echo=FALSE}
+inputPanel(
+  numericInput("year", label="Year", value=2000, min=1382, max=2749),
+  
+  selectInput("month", label = "Month",
+               choices=1:12, selected = 1),
+  
+  selectInput("day", label = "Day",
+              choices=1:31, selected = 1)
+  
+  
+)
+
+
+renderPrint(textOutput(datetoWeekcal(c(input$year,input$month,input$day)))$attribs$id)
+renderPrint(textOutput(datetoWeekcal(inputdatestring=Sys.Date()))$attribs$id)
+
+```
+
+
