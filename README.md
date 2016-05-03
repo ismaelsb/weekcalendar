@@ -2,6 +2,8 @@
 
 Calendario semanal.
 
+Convertir fechas: https://ismaelsb.shinyapps.io/weekcalendar/
+
 El año tropical es más estable alrededor de la fecha presente (cerca del centro de nuestro ciclo en la precesión de equinoccios que comienza con el Holoceno) si se mide entre Solsticicios del Norte. Por esto hacemos una modificación al anterior calendario semanal propuesto:
 El año se divide en 4 estaciones de 13 semanas cada una, empezando la tercera estación (S3,verano en el Norte) en el inicio UTC de lunes más próximo al Solsticio del Norte. El año, por tanto, comienza 26 semanas antes, cerca del solsticio del Sur aunque no atado a éste.
 Cuando el solsticio del Norte salta de un año al otro por el mediodía del jueves, el año tiene una semana más. Se añade la semana extra* S3W00 al principio de S3.
